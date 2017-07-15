@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.ackdevelopment.plugins.scheme</id>
+    <name>Scheme Support</name>
+    <version>1.0</version>
+    <vendor email="aedan.smith@outlook.com" url="https://ackdevelopment.github.io/">AckDevelopment</vendor>
+
+    <description><![CDATA[
+      Scheme support for the IntelliJ platform.<br>
+    ]]></description>
+
+    <change-notes><![CDATA[
+
+    ]]>
+    </change-notes>
+
+    <idea-version since-build="145.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <action id="Scheme.NewSchemeFile"
+                class="com.ackdevelopment.plugins.scheme.actions.NewSchemeFile"
+                text="Scheme File"
+                description="Create a new Scheme file"
+                icon="SchemePluginIcons.SCHEME_ICON">
+            <add-to-group group-id="NewGroup" relative-to-action="NewFile" anchor="before"/>
+        </action>
+    </actions>
+
+    <project-components>
+
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="com.ackdevelopment.plugins.scheme.file.SchemeFileTypeFactory"/>
+        <fileTypeDetector implementation="com.ackdevelopment.plugins.scheme.file.SchemeFileTypeDetector"/>
+
+        <configurationType implementation="com.ackdevelopment.plugins.scheme.config.SchemeConfigurationType"/>
+        <programRunner implementation="com.ackdevelopment.plugins.scheme.config.SchemeRunner"/>
+
+        <lang.parserDefinition language="Scheme" implementationClass="com.ackdevelopment.plugins.scheme.lang.parser.SchemeParserDefinition"/>
+        <lang.braceMatcher language="Scheme" implementationClass="com.ackdevelopment.plugins.scheme.lang.SchemeBraceMatcher"/>
+        <lang.syntaxHighlighterFactory language="Scheme" implementationClass="com.ackdevelopment.plugins.scheme.editor.SchemeSyntaxHighlighterFactory"/>
+    </extensions>
+</idea-plugin>
