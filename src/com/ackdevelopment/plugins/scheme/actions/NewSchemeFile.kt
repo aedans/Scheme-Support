@@ -28,7 +28,6 @@ class NewSchemeFile : CreateElementActionBase("Create new Scheme file", "Create 
         return validator.createdElements
     }
 
-    @Throws(Exception::class)
     override fun create(name: String, directory: PsiDirectory): Array<PsiElement> {
         val oFile = PsiFileFactory.getInstance(directory.project).createFileFromText(
                 if (name.contains(".")) name else name + ".scm",

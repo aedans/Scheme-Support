@@ -56,7 +56,6 @@ expression ::= constant
              | letrec_syntax_expression
              | begin_expression
              | abbreviation
-             |
 
 quote_expression ::= OPEN_PAREN QUOTE datum CLOSE_PAREN
 
