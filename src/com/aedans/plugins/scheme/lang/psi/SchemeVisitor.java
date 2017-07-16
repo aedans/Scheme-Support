@@ -67,7 +67,7 @@ public class SchemeVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitLetSyntaxExpression(@NotNull SchemeLetSyntaxExpression o) {
+public void visitLetSyntaxExpression(@NotNull SchemeLetSyntaxExpression o) {
     visitPsiElement(o);
   }
 

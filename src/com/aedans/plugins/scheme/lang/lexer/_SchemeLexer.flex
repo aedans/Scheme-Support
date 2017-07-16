@@ -1,10 +1,10 @@
-package com.ackdevelopment.plugins.scheme.lang.lexer;
+package com.aedans.plugins.scheme.lang.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
-import com.ackdevelopment.plugins.scheme.lang.lexer.SchemeTokenTypes;
-import com.ackdevelopment.plugins.scheme.lang.parser.SchemeTokens;
+import com.aedans.plugins.scheme.lang.lexer.SchemeTokenTypes;
+import com.aedans.plugins.scheme.lang.parser.SchemeTokens;
 
 %%
 
@@ -51,7 +51,7 @@ CHARACTER_NAME="alarm"
               |"tab"
               |"vtab"
 
-STRING=\"{STRING_CHARACTER}*\"
+STRING=\"{STRING_CHARACTER}*\"?
 STRING_CHARACTER="\\".|[^\"\\]
 
 IDENTIFIER={IDENTIFIER_INITIAL}{IDENTIFIER_SUBSEQUENT}*|"+"|"-"|"..."|{IDENTIFIER_LITERAL}
