@@ -47,6 +47,7 @@
 
         <configurationType implementation="com.aedans.plugins.scheme.config.SchemeConfigurationType"/>
         <programRunner implementation="com.aedans.plugins.scheme.config.SchemeRunner"/>
+        <colorSettingsPage implementation="com.aedans.plugins.scheme.editor.SchemeColorSettingsPage"/>
 
         <lang.parserDefinition language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.parser.SchemeParserDefinition"/>
         <lang.braceMatcher language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.SchemeBraceMatcher"/>

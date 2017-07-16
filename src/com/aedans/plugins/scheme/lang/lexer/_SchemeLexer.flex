@@ -28,6 +28,7 @@ DEFINE="define"
 DEFINE_SYNTAX="define-syntax"
 LET_SYNTAX="let-syntax"
 LETREC_SYNTAX="letrec-syntax"
+SYNTAX_RULES="syntax-rules"
 QUOTE="quote"
 LAMBDA="lambda"
 IF="if"
@@ -105,6 +106,7 @@ DIGIT=[0-9a-f]
 {DEFINE_SYNTAX} { return SchemeTokenTypes.DEFINE_SYNTAX; }
 {LET_SYNTAX} { return SchemeTokenTypes.LET_SYNTAX; }
 {LETREC_SYNTAX} { return SchemeTokenTypes.LETREC_SYNTAX; }
+{SYNTAX_RULES} { return SchemeTokenTypes.SYNTAX_RULES; }
 {QUOTE} { return SchemeTokenTypes.QUOTE; }
 {LAMBDA} { return SchemeTokenTypes.LAMBDA; }
 {IF} { return SchemeTokenTypes.IF; }

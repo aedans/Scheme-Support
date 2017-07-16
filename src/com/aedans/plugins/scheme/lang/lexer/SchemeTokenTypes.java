@@ -4,7 +4,7 @@ package com.aedans.plugins.scheme.lang.lexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-import com.aedans.plugins.scheme.lang.psi.impl.*;
+import com.aedans.plugins.scheme.lang.psi.gen.impl.*;
 
 public interface SchemeTokenTypes {
 
@@ -19,8 +19,8 @@ public interface SchemeTokenTypes {
   IElementType EXPRESSION = new SchemeElementType("EXPRESSION");
   IElementType FORM = new SchemeElementType("FORM");
   IElementType FORMALS = new SchemeElementType("FORMALS");
+  IElementType ID = new SchemeElementType("ID");
   IElementType IF_EXPRESSION = new SchemeElementType("IF_EXPRESSION");
-  IElementType KEYWORD = new SchemeElementType("KEYWORD");
   IElementType LAMBDA_EXPRESSION = new SchemeElementType("LAMBDA_EXPRESSION");
   IElementType LETREC_DEFINITION = new SchemeElementType("LETREC_DEFINITION");
   IElementType LETREC_SYNTAX_EXPRESSION = new SchemeElementType("LETREC_SYNTAX_EXPRESSION");
@@ -33,7 +33,7 @@ public interface SchemeTokenTypes {
   IElementType SYMBOL = new SchemeElementType("SYMBOL");
   IElementType SYNTAX_BINDING = new SchemeElementType("SYNTAX_BINDING");
   IElementType SYNTAX_DEFINITION = new SchemeElementType("SYNTAX_DEFINITION");
-  IElementType VARIABLE = new SchemeElementType("VARIABLE");
+  IElementType SYNTAX_RULES_EXPRESSION = new SchemeElementType("SYNTAX_RULES_EXPRESSION");
   IElementType VARIABLE_DEFINITION = new SchemeElementType("VARIABLE_DEFINITION");
   IElementType VECTOR = new SchemeElementType("VECTOR");
 
@@ -59,6 +59,7 @@ public interface SchemeTokenTypes {
   IElementType QUOTE = new SchemeTokenType("QUOTE");
   IElementType SET = new SchemeTokenType("SET");
   IElementType STRING = new SchemeTokenType("STRING");
+  IElementType SYNTAX_RULES = new SchemeTokenType("SYNTAX_RULES");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
@@ -96,11 +97,11 @@ public interface SchemeTokenTypes {
       else if (type == FORMALS) {
         return new SchemeFormalsImpl(node);
       }
+      else if (type == ID) {
+        return new SchemeIdImpl(node);
+      }
       else if (type == IF_EXPRESSION) {
         return new SchemeIfExpressionImpl(node);
-      }
-      else if (type == KEYWORD) {
-        return new SchemeKeywordImpl(node);
       }
       else if (type == LAMBDA_EXPRESSION) {
         return new SchemeLambdaExpressionImpl(node);
@@ -138,8 +139,8 @@ public interface SchemeTokenTypes {
       else if (type == SYNTAX_DEFINITION) {
         return new SchemeSyntaxDefinitionImpl(node);
       }
-      else if (type == VARIABLE) {
-        return new SchemeVariableImpl(node);
+      else if (type == SYNTAX_RULES_EXPRESSION) {
+        return new SchemeSyntaxRulesExpressionImpl(node);
       }
       else if (type == VARIABLE_DEFINITION) {
         return new SchemeVariableDefinitionImpl(node);

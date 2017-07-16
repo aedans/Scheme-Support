@@ -56,11 +56,11 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     else if (t == FORMALS) {
       r = formals(b, 0);
     }
+    else if (t == ID) {
+      r = id(b, 0);
+    }
     else if (t == IF_EXPRESSION) {
       r = if_expression(b, 0);
-    }
-    else if (t == KEYWORD) {
-      r = keyword(b, 0);
     }
     else if (t == LAMBDA_EXPRESSION) {
       r = lambda_expression(b, 0);
@@ -98,8 +98,8 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     else if (t == SYNTAX_DEFINITION) {
       r = syntax_definition(b, 0);
     }
-    else if (t == VARIABLE) {
-      r = variable(b, 0);
+    else if (t == SYNTAX_RULES_EXPRESSION) {
+      r = syntax_rules_expression(b, 0);
     }
     else if (t == VARIABLE_DEFINITION) {
       r = variable_definition(b, 0);
@@ -351,7 +351,7 @@ public class SchemeParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // constant
-  //              | variable
+  //              | id
   //              | quote_expression
   //              | lambda_expression
   //              | if_expression
@@ -359,6 +359,7 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   //              | application
   //              | let_syntax_expression
   //              | letrec_syntax_expression
+  //              | syntax_rules_expression
   //              | begin_expression
   //              | abbreviation
   public static boolean expression(PsiBuilder b, int l) {
@@ -366,7 +367,7 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION, "<expression>");
     r = constant(b, l + 1);
-    if (!r) r = variable(b, l + 1);
+    if (!r) r = id(b, l + 1);
     if (!r) r = quote_expression(b, l + 1);
     if (!r) r = lambda_expression(b, l + 1);
     if (!r) r = if_expression(b, l + 1);
@@ -374,6 +375,7 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     if (!r) r = application(b, l + 1);
     if (!r) r = let_syntax_expression(b, l + 1);
     if (!r) r = letrec_syntax_expression(b, l + 1);
+    if (!r) r = syntax_rules_expression(b, l + 1);
     if (!r) r = begin_expression(b, l + 1);
     if (!r) r = abbreviation(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -393,22 +395,22 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable
-  //           | OPEN_PAREN variable* CLOSE_PAREN
-  //           | OPEN_PAREN variable+ DOT variable CLOSE_PAREN
+  // id
+  //           | OPEN_PAREN id* CLOSE_PAREN
+  //           | OPEN_PAREN id+ DOT id CLOSE_PAREN
   public static boolean formals(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formals")) return false;
     if (!nextTokenIs(b, "<formals>", IDENTIFIER, OPEN_PAREN)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FORMALS, "<formals>");
-    r = variable(b, l + 1);
+    r = id(b, l + 1);
     if (!r) r = formals_1(b, l + 1);
     if (!r) r = formals_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // OPEN_PAREN variable* CLOSE_PAREN
+  // OPEN_PAREN id* CLOSE_PAREN
   private static boolean formals_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formals_1")) return false;
     boolean r;
@@ -420,19 +422,19 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // variable*
+  // id*
   private static boolean formals_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formals_1_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!variable(b, l + 1)) break;
+      if (!id(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "formals_1_1", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
-  // OPEN_PAREN variable+ DOT variable CLOSE_PAREN
+  // OPEN_PAREN id+ DOT id CLOSE_PAREN
   private static boolean formals_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formals_2")) return false;
     boolean r;
@@ -440,25 +442,37 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, OPEN_PAREN);
     r = r && formals_2_1(b, l + 1);
     r = r && consumeToken(b, DOT);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // variable+
+  // id+
   private static boolean formals_2_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formals_2_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = variable(b, l + 1);
+    r = id(b, l + 1);
     int c = current_position_(b);
     while (r) {
-      if (!variable(b, l + 1)) break;
+      if (!id(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "formals_2_1", c)) break;
       c = current_position_(b);
     }
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "id")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, ID, r);
     return r;
   }
 
@@ -500,18 +514,6 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     r = r && expression(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean keyword(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyword")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, KEYWORD, r);
     return r;
   }
 
@@ -793,14 +795,14 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SET variable expression
+  // SET id expression
   public static boolean set_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "set_expression")) return false;
     if (!nextTokenIs(b, SET)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, SET);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && expression(b, l + 1);
     exit_section_(b, m, SET_EXPRESSION, r);
     return r;
@@ -832,14 +834,14 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_PAREN keyword expression CLOSE_PAREN
+  // OPEN_PAREN id expression CLOSE_PAREN
   public static boolean syntax_binding(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "syntax_binding")) return false;
     if (!nextTokenIs(b, OPEN_PAREN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, OPEN_PAREN);
-    r = r && keyword(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && expression(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     exit_section_(b, m, SYNTAX_BINDING, r);
@@ -847,14 +849,14 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_PAREN DEFINE_SYNTAX keyword expression CLOSE_PAREN
+  // OPEN_PAREN DEFINE_SYNTAX id expression CLOSE_PAREN
   public static boolean syntax_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "syntax_definition")) return false;
     if (!nextTokenIs(b, OPEN_PAREN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OPEN_PAREN, DEFINE_SYNTAX);
-    r = r && keyword(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && expression(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     exit_section_(b, m, SYNTAX_DEFINITION, r);
@@ -862,21 +864,40 @@ public class SchemeParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean variable(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+  // OPEN_PAREN SYNTAX_RULES list expression+ CLOSE_PAREN
+  public static boolean syntax_rules_expression(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "syntax_rules_expression")) return false;
+    if (!nextTokenIs(b, OPEN_PAREN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, VARIABLE, r);
+    r = consumeTokens(b, 0, OPEN_PAREN, SYNTAX_RULES);
+    r = r && list(b, l + 1);
+    r = r && syntax_rules_expression_3(b, l + 1);
+    r = r && consumeToken(b, CLOSE_PAREN);
+    exit_section_(b, m, SYNTAX_RULES_EXPRESSION, r);
+    return r;
+  }
+
+  // expression+
+  private static boolean syntax_rules_expression_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "syntax_rules_expression_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = expression(b, l + 1);
+    int c = current_position_(b);
+    while (r) {
+      if (!expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "syntax_rules_expression_3", c)) break;
+      c = current_position_(b);
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // OPEN_PAREN DEFINE variable expression CLOSE_PAREN
-  //                       | OPEN_PAREN DEFINE OPEN_PAREN variable variable* CLOSE_PAREN body CLOSE_PAREN
-  //                       | OPEN_PAREN DEFINE OPEN_PAREN variable variable* DOT variable CLOSE_PAREN body CLOSE_PAREN
+  // OPEN_PAREN DEFINE id expression CLOSE_PAREN
+  //                       | OPEN_PAREN DEFINE OPEN_PAREN id id* CLOSE_PAREN body CLOSE_PAREN
+  //                       | OPEN_PAREN DEFINE OPEN_PAREN id id* DOT id CLOSE_PAREN body CLOSE_PAREN
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
     if (!nextTokenIs(b, OPEN_PAREN)) return false;
@@ -889,26 +910,26 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // OPEN_PAREN DEFINE variable expression CLOSE_PAREN
+  // OPEN_PAREN DEFINE id expression CLOSE_PAREN
   private static boolean variable_definition_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OPEN_PAREN, DEFINE);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && expression(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // OPEN_PAREN DEFINE OPEN_PAREN variable variable* CLOSE_PAREN body CLOSE_PAREN
+  // OPEN_PAREN DEFINE OPEN_PAREN id id* CLOSE_PAREN body CLOSE_PAREN
   private static boolean variable_definition_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OPEN_PAREN, DEFINE, OPEN_PAREN);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && variable_definition_1_4(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     r = r && body(b, l + 1);
@@ -917,28 +938,28 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // variable*
+  // id*
   private static boolean variable_definition_1_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_1_4")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!variable(b, l + 1)) break;
+      if (!id(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "variable_definition_1_4", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
-  // OPEN_PAREN DEFINE OPEN_PAREN variable variable* DOT variable CLOSE_PAREN body CLOSE_PAREN
+  // OPEN_PAREN DEFINE OPEN_PAREN id id* DOT id CLOSE_PAREN body CLOSE_PAREN
   private static boolean variable_definition_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OPEN_PAREN, DEFINE, OPEN_PAREN);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && variable_definition_2_4(b, l + 1);
     r = r && consumeToken(b, DOT);
-    r = r && variable(b, l + 1);
+    r = r && id(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
     r = r && body(b, l + 1);
     r = r && consumeToken(b, CLOSE_PAREN);
@@ -946,12 +967,12 @@ public class SchemeParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // variable*
+  // id*
   private static boolean variable_definition_2_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_2_4")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!variable(b, l + 1)) break;
+      if (!id(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "variable_definition_2_4", c)) break;
       c = current_position_(b);
     }

@@ -5,8 +5,9 @@
 
   psiClassPrefix="Scheme"
   psiImplClassSuffix="Impl"
-  psiPackage="com.aedans.plugins.scheme.lang.psi"
-  psiImplPackage="com.aedans.plugins.scheme.lang.psi.impl"
+  psiPackage="com.aedans.plugins.scheme.lang.psi.gen"
+  psiImplPackage="com.aedans.plugins.scheme.lang.psi.gen.impl"
+  psiImplUtilClass="com.aedans.plugins.scheme.lang.psi.SchemePsiImplUtil"
 
   elementTypeHolderClass="com.aedans.plugins.scheme.lang.lexer.SchemeTokenTypes"
   elementTypeClass="com.aedans.plugins.scheme.lang.lexer.SchemeElementType"
@@ -24,11 +25,11 @@ definition ::= variable_definition
              | let_definition
              | letrec_definition
 
-variable_definition ::= OPEN_PAREN DEFINE variable expression CLOSE_PAREN
-                      | OPEN_PAREN DEFINE OPEN_PAREN variable variable* CLOSE_PAREN body CLOSE_PAREN
-                      | OPEN_PAREN DEFINE OPEN_PAREN variable variable* DOT variable CLOSE_PAREN body CLOSE_PAREN
+variable_definition ::= OPEN_PAREN DEFINE id expression CLOSE_PAREN
+                      | OPEN_PAREN DEFINE OPEN_PAREN id id* CLOSE_PAREN body CLOSE_PAREN
+                      | OPEN_PAREN DEFINE OPEN_PAREN id id* DOT id CLOSE_PAREN body CLOSE_PAREN
 
-syntax_definition ::= OPEN_PAREN DEFINE_SYNTAX keyword expression CLOSE_PAREN
+syntax_definition ::= OPEN_PAREN DEFINE_SYNTAX id expression CLOSE_PAREN
 
 begin_definition ::= OPEN_PAREN BEGIN definition* CLOSE_PAREN
 
@@ -36,17 +37,13 @@ let_definition ::= OPEN_PAREN LET_SYNTAX OPEN_PAREN syntax_binding* definition* 
 
 letrec_definition ::= OPEN_PAREN LETREC_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN definition* CLOSE_PAREN
 
-variable ::= IDENTIFIER
-
-keyword ::= IDENTIFIER
-
 body ::= definition* expression+
 
-syntax_binding ::= OPEN_PAREN keyword expression CLOSE_PAREN
+syntax_binding ::= OPEN_PAREN id expression CLOSE_PAREN
 
 // Expressions
 expression ::= constant
-             | variable
+             | id
              | quote_expression
              | lambda_expression
              | if_expression
@@ -54,6 +51,7 @@ expression ::= constant
              | application
              | let_syntax_expression
              | letrec_syntax_expression
+             | syntax_rules_expression
              | begin_expression
              | abbreviation
 
@@ -64,11 +62,13 @@ lambda_expression ::= OPEN_PAREN LAMBDA formals body CLOSE_PAREN
 if_expression ::= OPEN_PAREN IF expression expression expression CLOSE_PAREN
                 | OPEN_PAREN IF expression expression CLOSE_PAREN
 
-set_expression ::= SET variable expression
+set_expression ::= SET id expression
 
 let_syntax_expression ::= OPEN_PAREN LET_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN expression+ CLOSE_PAREN
 
 letrec_syntax_expression ::= OPEN_PAREN LETREC_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN expression+ CLOSE_PAREN
+
+syntax_rules_expression ::= OPEN_PAREN SYNTAX_RULES list expression+ CLOSE_PAREN
 
 begin_expression ::= OPEN_PAREN BEGIN expression* CLOSE_PAREN
 
@@ -76,9 +76,9 @@ constant ::= BOOLEAN|NUMBER|CHARACTER|STRING|nil
 
 nil ::= OPEN_PAREN CLOSE_PAREN
 
-formals ::= variable
-          | OPEN_PAREN variable* CLOSE_PAREN
-          | OPEN_PAREN variable+ DOT variable CLOSE_PAREN
+formals ::= id
+          | OPEN_PAREN id* CLOSE_PAREN
+          | OPEN_PAREN id+ DOT id CLOSE_PAREN
 
 application ::= OPEN_PAREN expression expression* CLOSE_PAREN
 
@@ -97,3 +97,5 @@ abbreviation ::= APOSTROPHE datum
                | COMMA_AT datum
 
 vector ::= POUND OPEN_PAREN datum* CLOSE_PAREN
+
+id ::= IDENTIFIER
