@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeLetrecSyntaxExpression extends PsiElement {
 
   @NotNull
-  List<SchemeExpression> getExpressionList();
-
-  @NotNull
-  List<SchemeSyntaxBinding> getSyntaxBindingList();
+  SchemeParenthesized getParenthesized();
 
 }

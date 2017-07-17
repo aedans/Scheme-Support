@@ -29,8 +29,8 @@ public class SchemeVectorImpl extends ASTWrapperPsiElement implements SchemeVect
 
   @Override
   @NotNull
-  public List<SchemeDatum> getDatumList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeDatum.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

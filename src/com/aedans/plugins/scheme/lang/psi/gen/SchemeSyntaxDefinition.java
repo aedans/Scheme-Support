@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeSyntaxDefinition extends PsiElement {
 
   @NotNull
-  SchemeExpression getExpression();
-
-  @NotNull
-  SchemeId getId();
+  SchemeParenthesized getParenthesized();
 
 }

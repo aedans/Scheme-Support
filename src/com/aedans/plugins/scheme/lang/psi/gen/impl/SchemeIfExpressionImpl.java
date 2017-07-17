@@ -29,8 +29,8 @@ public class SchemeIfExpressionImpl extends ASTWrapperPsiElement implements Sche
 
   @Override
   @NotNull
-  public List<SchemeExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeExpression.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

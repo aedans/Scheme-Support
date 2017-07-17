@@ -87,6 +87,10 @@ public class SchemeVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitParenthesized(@NotNull SchemeParenthesized o) {
+    visitPsiElement(o);
+  }
+
   public void visitQuoteExpression(@NotNull SchemeQuoteExpression o) {
     visitPsiElement(o);
   }

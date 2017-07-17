@@ -28,21 +28,9 @@ public class SchemeVariableDefinitionImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
-  @Nullable
-  public SchemeBody getBody() {
-    return findChildByClass(SchemeBody.class);
-  }
-
-  @Override
-  @Nullable
-  public SchemeExpression getExpression() {
-    return findChildByClass(SchemeExpression.class);
-  }
-
-  @Override
   @NotNull
-  public List<SchemeId> getIdList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeId.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

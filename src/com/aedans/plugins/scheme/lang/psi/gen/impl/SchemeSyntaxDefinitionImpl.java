@@ -29,14 +29,8 @@ public class SchemeSyntaxDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public SchemeExpression getExpression() {
-    return findNotNullChildByClass(SchemeExpression.class);
-  }
-
-  @Override
-  @NotNull
-  public SchemeId getId() {
-    return findNotNullChildByClass(SchemeId.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

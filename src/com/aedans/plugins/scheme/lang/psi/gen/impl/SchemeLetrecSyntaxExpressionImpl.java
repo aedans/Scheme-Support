@@ -29,14 +29,8 @@ public class SchemeLetrecSyntaxExpressionImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public List<SchemeExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeExpression.class);
-  }
-
-  @Override
-  @NotNull
-  public List<SchemeSyntaxBinding> getSyntaxBindingList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeSyntaxBinding.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

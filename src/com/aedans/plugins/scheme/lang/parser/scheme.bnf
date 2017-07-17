@@ -25,21 +25,21 @@ definition ::= variable_definition
              | let_definition
              | letrec_definition
 
-variable_definition ::= OPEN_PAREN DEFINE id expression CLOSE_PAREN
-                      | OPEN_PAREN DEFINE OPEN_PAREN id id* CLOSE_PAREN body CLOSE_PAREN
-                      | OPEN_PAREN DEFINE OPEN_PAREN id id* DOT id CLOSE_PAREN body CLOSE_PAREN
+variable_definition ::= <<parenthesized (DEFINE id expression)>>
+                      | <<parenthesized (DEFINE <<parenthesized (id id*)>> body)>>
+                      | <<parenthesized (DEFINE <<parenthesized (id id* DOT id)>> body)>>
 
-syntax_definition ::= OPEN_PAREN DEFINE_SYNTAX id expression CLOSE_PAREN
+syntax_definition ::= <<parenthesized (DEFINE_SYNTAX id expression)>>
 
-begin_definition ::= OPEN_PAREN BEGIN definition* CLOSE_PAREN
+begin_definition ::= <<parenthesized (BEGIN definition*)>>
 
-let_definition ::= OPEN_PAREN LET_SYNTAX OPEN_PAREN syntax_binding* definition* CLOSE_PAREN
+let_definition ::= <<parenthesized (LET_SYNTAX <<parenthesized (syntax_binding*)>> definition*)>>
 
-letrec_definition ::= OPEN_PAREN LETREC_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN definition* CLOSE_PAREN
+letrec_definition ::= <<parenthesized (LETREC_SYNTAX <<parenthesized (syntax_binding*)>> definition*)>>
 
 body ::= definition* expression+
 
-syntax_binding ::= OPEN_PAREN id expression CLOSE_PAREN
+syntax_binding ::= <<parenthesized (id expression)>>
 
 // Expressions
 expression ::= constant
@@ -55,40 +55,40 @@ expression ::= constant
              | begin_expression
              | abbreviation
 
-quote_expression ::= OPEN_PAREN QUOTE datum CLOSE_PAREN
+quote_expression ::= <<parenthesized (QUOTE datum)>>
 
-lambda_expression ::= OPEN_PAREN LAMBDA formals body CLOSE_PAREN
+lambda_expression ::= <<parenthesized (LAMBDA formals body)>>
 
-if_expression ::= OPEN_PAREN IF expression expression expression CLOSE_PAREN
-                | OPEN_PAREN IF expression expression CLOSE_PAREN
+if_expression ::= <<parenthesized (IF expression expression expression)>>
+                | <<parenthesized (IF expression expression)>>
 
 set_expression ::= SET id expression
 
-let_syntax_expression ::= OPEN_PAREN LET_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN expression+ CLOSE_PAREN
+let_syntax_expression ::= <<parenthesized (LET_SYNTAX <<parenthesized (syntax_binding*)>> expression+)>>
 
-letrec_syntax_expression ::= OPEN_PAREN LETREC_SYNTAX OPEN_PAREN syntax_binding* CLOSE_PAREN expression+ CLOSE_PAREN
+letrec_syntax_expression ::= <<parenthesized (LETREC_SYNTAX <<parenthesized (syntax_binding*)>> expression+)>>
 
-syntax_rules_expression ::= OPEN_PAREN SYNTAX_RULES list expression+ CLOSE_PAREN
+syntax_rules_expression ::= <<parenthesized (SYNTAX_RULES list expression+)>>
 
-begin_expression ::= OPEN_PAREN BEGIN expression* CLOSE_PAREN
+begin_expression ::= <<parenthesized (BEGIN expression*)>>
 
 constant ::= BOOLEAN|NUMBER|CHARACTER|STRING|nil
 
-nil ::= OPEN_PAREN CLOSE_PAREN
+nil ::= <<parenthesized ()>>
 
 formals ::= id
-          | OPEN_PAREN id* CLOSE_PAREN
-          | OPEN_PAREN id+ DOT id CLOSE_PAREN
+          | <<parenthesized (id*)>>
+          | <<parenthesized (id+ DOT id)>>
 
-application ::= OPEN_PAREN expression expression* CLOSE_PAREN
+application ::= <<parenthesized (expression expression*)>>
 
 // datum
 datum ::= BOOLEAN|NUMBER|CHARACTER|STRING|symbol|list|vector
 
 symbol ::= IDENTIFIER
 
-list ::= OPEN_PAREN datum* CLOSE_PAREN
-       | OPEN_PAREN datum+ DOT datum CLOSE_PAREN
+list ::= <<parenthesized (datum*)>>
+       | <<parenthesized (datum+ DOT datum)>>
        | abbreviation
 
 abbreviation ::= APOSTROPHE datum
@@ -96,6 +96,12 @@ abbreviation ::= APOSTROPHE datum
                | COMMA datum
                | COMMA_AT datum
 
-vector ::= POUND OPEN_PAREN datum* CLOSE_PAREN
+vector ::= POUND <<parenthesized (datum*)>>
 
 id ::= IDENTIFIER
+
+// util
+
+meta parenthesized ::= OPEN_PAREN <<param>> CLOSE_PAREN
+            | OPEN_BRACE <<param>> CLOSE_BRACE
+            | OPEN_BRACKET <<param>> CLOSE_BRACKET

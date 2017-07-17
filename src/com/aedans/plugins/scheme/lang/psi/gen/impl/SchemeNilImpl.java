@@ -27,4 +27,10 @@ public class SchemeNilImpl extends ASTWrapperPsiElement implements SchemeNil {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
+  }
+
 }

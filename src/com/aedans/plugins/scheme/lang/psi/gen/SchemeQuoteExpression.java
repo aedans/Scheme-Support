@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeQuoteExpression extends PsiElement {
 
   @NotNull
-  SchemeDatum getDatum();
+  SchemeParenthesized getParenthesized();
 
 }

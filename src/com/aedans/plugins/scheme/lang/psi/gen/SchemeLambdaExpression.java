@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeLambdaExpression extends PsiElement {
 
   @NotNull
-  SchemeBody getBody();
-
-  @NotNull
-  SchemeFormals getFormals();
+  SchemeParenthesized getParenthesized();
 
 }

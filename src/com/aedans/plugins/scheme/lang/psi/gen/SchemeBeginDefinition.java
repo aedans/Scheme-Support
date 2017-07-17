@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeBeginDefinition extends PsiElement {
 
   @NotNull
-  List<SchemeDefinition> getDefinitionList();
+  SchemeParenthesized getParenthesized();
 
 }

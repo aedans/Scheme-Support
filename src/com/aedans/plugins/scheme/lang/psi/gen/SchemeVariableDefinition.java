@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface SchemeVariableDefinition extends PsiElement {
 
-  @Nullable
-  SchemeBody getBody();
-
-  @Nullable
-  SchemeExpression getExpression();
-
   @NotNull
-  List<SchemeId> getIdList();
+  SchemeParenthesized getParenthesized();
 
 }

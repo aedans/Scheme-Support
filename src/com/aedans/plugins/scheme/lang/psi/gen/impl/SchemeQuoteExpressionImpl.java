@@ -29,8 +29,8 @@ public class SchemeQuoteExpressionImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @NotNull
-  public SchemeDatum getDatum() {
-    return findNotNullChildByClass(SchemeDatum.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

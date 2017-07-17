@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeVector extends PsiElement {
 
   @NotNull
-  List<SchemeDatum> getDatumList();
+  SchemeParenthesized getParenthesized();
 
 }

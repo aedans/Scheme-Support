@@ -37,6 +37,10 @@ class SchemeSyntaxHighlighter : SyntaxHighlighterBase() {
             SchemeTokenTypes.IDENTIFIER -> IDENTIFIER_KEY
             SchemeTokenTypes.OPEN_PAREN,
             SchemeTokenTypes.CLOSE_PAREN -> PAREN_KEY
+            SchemeTokenTypes.OPEN_BRACE,
+            SchemeTokenTypes.CLOSE_BRACE -> BRACE_KEY
+            SchemeTokenTypes.OPEN_BRACKET,
+            SchemeTokenTypes.CLOSE_BRACKET -> BRACKET_KEY
             SchemeTokenTypes.CHARACTER -> CHARACTER_KEY
             SchemeTokenTypes.STRING -> STRING_KEY
             SchemeTokenTypes.NUMBER -> NUMBER_KEY
@@ -51,6 +55,8 @@ class SchemeSyntaxHighlighter : SyntaxHighlighterBase() {
         val BOOLEAN_KEY = createTextAttributesKey("SCHEME_BOOLEAN", DefaultLanguageHighlighterColors.KEYWORD)
         val IDENTIFIER_KEY = createTextAttributesKey("SCHEME_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER)
         val PAREN_KEY = createTextAttributesKey("SCHEME_PAREN", DefaultLanguageHighlighterColors.PARENTHESES)
+        val BRACE_KEY = createTextAttributesKey("SCHEME_BRACE", DefaultLanguageHighlighterColors.BRACES)
+        val BRACKET_KEY = createTextAttributesKey("SCHEME_BRACKET", DefaultLanguageHighlighterColors.BRACKETS)
         val CHARACTER_KEY = createTextAttributesKey("SCHEME_CHARACTER", DefaultLanguageHighlighterColors.STRING)
         val STRING_KEY = createTextAttributesKey("SCHEME_STRING", DefaultLanguageHighlighterColors.STRING)
         val NUMBER_KEY = createTextAttributesKey("SCHEME_NUMBER", DefaultLanguageHighlighterColors.NUMBER)

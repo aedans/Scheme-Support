@@ -34,9 +34,9 @@ public class SchemeListImpl extends ASTWrapperPsiElement implements SchemeList {
   }
 
   @Override
-  @NotNull
-  public List<SchemeDatum> getDatumList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeDatum.class);
+  @Nullable
+  public SchemeParenthesized getParenthesized() {
+    return findChildByClass(SchemeParenthesized.class);
   }
 
 }

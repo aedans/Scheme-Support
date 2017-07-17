@@ -28,6 +28,7 @@ public interface SchemeTokenTypes {
   IElementType LET_SYNTAX_EXPRESSION = new SchemeElementType("LET_SYNTAX_EXPRESSION");
   IElementType LIST = new SchemeElementType("LIST");
   IElementType NIL = new SchemeElementType("NIL");
+  IElementType PARENTHESIZED = new SchemeElementType("PARENTHESIZED");
   IElementType QUOTE_EXPRESSION = new SchemeElementType("QUOTE_EXPRESSION");
   IElementType SET_EXPRESSION = new SchemeElementType("SET_EXPRESSION");
   IElementType SYMBOL = new SchemeElementType("SYMBOL");
@@ -42,6 +43,8 @@ public interface SchemeTokenTypes {
   IElementType BEGIN = new SchemeTokenType("BEGIN");
   IElementType BOOLEAN = new SchemeTokenType("BOOLEAN");
   IElementType CHARACTER = new SchemeTokenType("CHARACTER");
+  IElementType CLOSE_BRACE = new SchemeTokenType("CLOSE_BRACE");
+  IElementType CLOSE_BRACKET = new SchemeTokenType("CLOSE_BRACKET");
   IElementType CLOSE_PAREN = new SchemeTokenType("CLOSE_PAREN");
   IElementType COMMA = new SchemeTokenType("COMMA");
   IElementType COMMA_AT = new SchemeTokenType("COMMA_AT");
@@ -54,6 +57,8 @@ public interface SchemeTokenTypes {
   IElementType LETREC_SYNTAX = new SchemeTokenType("LETREC_SYNTAX");
   IElementType LET_SYNTAX = new SchemeTokenType("LET_SYNTAX");
   IElementType NUMBER = new SchemeTokenType("NUMBER");
+  IElementType OPEN_BRACE = new SchemeTokenType("OPEN_BRACE");
+  IElementType OPEN_BRACKET = new SchemeTokenType("OPEN_BRACKET");
   IElementType OPEN_PAREN = new SchemeTokenType("OPEN_PAREN");
   IElementType POUND = new SchemeTokenType("POUND");
   IElementType QUOTE = new SchemeTokenType("QUOTE");
@@ -123,6 +128,9 @@ public interface SchemeTokenTypes {
       }
       else if (type == NIL) {
         return new SchemeNilImpl(node);
+      }
+      else if (type == PARENTHESIZED) {
+        return new SchemeParenthesizedImpl(node);
       }
       else if (type == QUOTE_EXPRESSION) {
         return new SchemeQuoteExpressionImpl(node);

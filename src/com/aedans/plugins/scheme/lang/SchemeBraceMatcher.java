@@ -14,7 +14,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class SchemeBraceMatcher implements PairedBraceMatcher {
     private static final BracePair[] PAIRS = new BracePair[]{
-            new BracePair(SchemeTokenTypes.OPEN_PAREN, SchemeTokenTypes.CLOSE_PAREN, false)
+            new BracePair(SchemeTokenTypes.OPEN_PAREN, SchemeTokenTypes.CLOSE_PAREN, false),
+            new BracePair(SchemeTokenTypes.OPEN_BRACE, SchemeTokenTypes.CLOSE_BRACE, false),
+            new BracePair(SchemeTokenTypes.OPEN_BRACKET, SchemeTokenTypes.CLOSE_BRACKET, false)
     };
 
     @Override

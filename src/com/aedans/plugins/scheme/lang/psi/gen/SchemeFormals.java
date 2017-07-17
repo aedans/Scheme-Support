@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface SchemeFormals extends PsiElement {
 
-  @NotNull
-  List<SchemeId> getIdList();
+  @Nullable
+  SchemeId getId();
+
+  @Nullable
+  SchemeParenthesized getParenthesized();
 
 }

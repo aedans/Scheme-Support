@@ -29,14 +29,8 @@ public class SchemeLetDefinitionImpl extends ASTWrapperPsiElement implements Sch
 
   @Override
   @NotNull
-  public List<SchemeDefinition> getDefinitionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeDefinition.class);
-  }
-
-  @Override
-  @NotNull
-  public List<SchemeSyntaxBinding> getSyntaxBindingList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeSyntaxBinding.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

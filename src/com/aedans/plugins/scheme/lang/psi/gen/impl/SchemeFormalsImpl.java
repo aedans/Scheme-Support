@@ -28,9 +28,15 @@ public class SchemeFormalsImpl extends ASTWrapperPsiElement implements SchemeFor
   }
 
   @Override
-  @NotNull
-  public List<SchemeId> getIdList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeId.class);
+  @Nullable
+  public SchemeId getId() {
+    return findChildByClass(SchemeId.class);
+  }
+
+  @Override
+  @Nullable
+  public SchemeParenthesized getParenthesized() {
+    return findChildByClass(SchemeParenthesized.class);
   }
 
 }

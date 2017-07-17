@@ -10,7 +10,7 @@ public interface SchemeList extends PsiElement {
   @Nullable
   SchemeAbbreviation getAbbreviation();
 
-  @NotNull
-  List<SchemeDatum> getDatumList();
+  @Nullable
+  SchemeParenthesized getParenthesized();
 
 }

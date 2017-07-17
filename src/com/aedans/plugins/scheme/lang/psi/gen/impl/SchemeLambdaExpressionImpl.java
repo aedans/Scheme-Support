@@ -29,14 +29,8 @@ public class SchemeLambdaExpressionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public SchemeBody getBody() {
-    return findNotNullChildByClass(SchemeBody.class);
-  }
-
-  @Override
-  @NotNull
-  public SchemeFormals getFormals() {
-    return findNotNullChildByClass(SchemeFormals.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

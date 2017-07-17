@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SchemeLetrecDefinition extends PsiElement {
 
   @NotNull
-  List<SchemeDefinition> getDefinitionList();
-
-  @NotNull
-  List<SchemeSyntaxBinding> getSyntaxBindingList();
+  SchemeParenthesized getParenthesized();
 
 }

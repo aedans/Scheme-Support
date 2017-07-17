@@ -23,6 +23,8 @@ public class SchemeColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Booleans", SchemeSyntaxHighlighter.Companion.getBOOLEAN_KEY()),
             new AttributesDescriptor("Identifiers", SchemeSyntaxHighlighter.Companion.getIDENTIFIER_KEY()),
             new AttributesDescriptor("Parentheses", SchemeSyntaxHighlighter.Companion.getPAREN_KEY()),
+            new AttributesDescriptor("Braces", SchemeSyntaxHighlighter.Companion.getBRACE_KEY()),
+            new AttributesDescriptor("Brackets", SchemeSyntaxHighlighter.Companion.getBRACKET_KEY()),
             new AttributesDescriptor("Characters", SchemeSyntaxHighlighter.Companion.getCHARACTER_KEY()),
             new AttributesDescriptor("Strings", SchemeSyntaxHighlighter.Companion.getSTRING_KEY()),
             new AttributesDescriptor("Numbers", SchemeSyntaxHighlighter.Companion.getNUMBER_KEY())

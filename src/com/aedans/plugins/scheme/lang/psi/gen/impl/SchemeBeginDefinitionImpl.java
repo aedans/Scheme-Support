@@ -29,8 +29,8 @@ public class SchemeBeginDefinitionImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @NotNull
-  public List<SchemeDefinition> getDefinitionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SchemeDefinition.class);
+  public SchemeParenthesized getParenthesized() {
+    return findNotNullChildByClass(SchemeParenthesized.class);
   }
 
 }

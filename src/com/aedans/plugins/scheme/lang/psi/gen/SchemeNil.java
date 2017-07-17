@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface SchemeNil extends PsiElement {
 
+  @NotNull
+  SchemeParenthesized getParenthesized();
+
 }

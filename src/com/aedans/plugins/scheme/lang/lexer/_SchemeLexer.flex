@@ -14,8 +14,12 @@ import com.aedans.plugins.scheme.lang.parser.SchemeTokens;
 %function advance
 %type IElementType
 
-OPEN_PAREN="("|"["
-CLOSE_PAREN=")"|"]"
+OPEN_PAREN="("
+CLOSE_PAREN=")"
+OPEN_BRACE="["
+CLOSE_BRACE="]"
+OPEN_BRACKET="{"
+CLOSE_BRACKET="}"
 APOSTROPHE="'"
 BACKQUOTE="`"
 COMMA=","
@@ -95,6 +99,10 @@ DIGIT=[0-9a-f]
 
 {OPEN_PAREN} { return SchemeTokenTypes.OPEN_PAREN; }
 {CLOSE_PAREN} { return SchemeTokenTypes.CLOSE_PAREN; }
+{OPEN_BRACE} { return SchemeTokenTypes.OPEN_BRACE; }
+{CLOSE_BRACE} { return SchemeTokenTypes.CLOSE_BRACE; }
+{OPEN_BRACKET} { return SchemeTokenTypes.OPEN_BRACKET; }
+{CLOSE_BRACKET} { return SchemeTokenTypes.CLOSE_BRACKET; }
 {APOSTROPHE} { return SchemeTokenTypes.APOSTROPHE; }
 {BACKQUOTE} { return SchemeTokenTypes.BACKQUOTE; }
 {COMMA} { return SchemeTokenTypes.COMMA; }
