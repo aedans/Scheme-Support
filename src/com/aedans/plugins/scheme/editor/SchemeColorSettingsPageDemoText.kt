@@ -19,4 +19,4 @@ val schemeColorSettingsPageDemoText = """
           list))
     ((for list as element body ...)
      (for element in list body ...))))
-"""
+""".substring(1)

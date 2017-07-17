@@ -35,7 +35,7 @@ IF="if"
 SET="set!"
 
 WHITE_SPACE=[\ \n\r\t\f]+
-COMMENT=";"[^\r\n]*|"#|"[^\#]+"|#"
+COMMENT=";"[^\r\n]*|"#|"[^\#]+"|#"?
 
 BOOLEAN="#t"|"#f"
 CHARACTER="#\\" ({CHARACTER_NAME}|"x"{DIGIT}+|.)
