@@ -14,8 +14,8 @@ import com.aedans.plugins.scheme.lang.parser.SchemeTokens;
 %function advance
 %type IElementType
 
-OPEN_PAREN="("
-CLOSE_PAREN=")"
+OPEN_PAREN="("|"["
+CLOSE_PAREN=")"|"]"
 APOSTROPHE="'"
 BACKQUOTE="`"
 COMMA=","
@@ -60,7 +60,7 @@ IDENTIFIER={IDENTIFIER_INITIAL}{IDENTIFIER_SUBSEQUENT}*|"+"|"-"|"..."|{IDENTIFIE
 IDENTIFIER_LITERAL="|"{IDENTIFIER_LITERAL_CHARACTER}*"|"
 IDENTIFIER_LITERAL_CHARACTER="\\".|[^\|]
 IDENTIFIER_SUBSEQUENT={IDENTIFIER_INITIAL}|{DIGIT}|"."|"+"|"-"
-IDENTIFIER_INITIAL={LETTER}|"!"|"$"|"%"|"&"|"*"|"/"|":"|"<"|"="|">"|"?"|"@"|"^"|"_"|"~"|"##"
+IDENTIFIER_INITIAL={LETTER}|"!"|"$"|"%"|"&"|"*"|"/"|":"|"<"|"="|">"|"?"|"@"|"^"|"_"|"~"|"#"[^\t\f\\\|]
 DIGIT=[0-9]
 LETTER=[a-zA-Z]
 
