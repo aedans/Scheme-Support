@@ -50,7 +50,8 @@
         <colorSettingsPage implementation="com.aedans.plugins.scheme.editor.SchemeColorSettingsPage"/>
 
         <lang.parserDefinition language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.parser.SchemeParserDefinition"/>
-        <lang.braceMatcher language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.SchemeBraceMatcher"/>
         <lang.syntaxHighlighterFactory language="Scheme" implementationClass="com.aedans.plugins.scheme.editor.SchemeSyntaxHighlighterFactory"/>
+        <lang.braceMatcher language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.SchemeBraceMatcher"/>
+        <lang.commenter language="Scheme" implementationClass="com.aedans.plugins.scheme.lang.SchemeCommenter"/>
     </extensions>
 </idea-plugin>

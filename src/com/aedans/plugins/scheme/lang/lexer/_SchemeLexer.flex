@@ -35,7 +35,8 @@ IF="if"
 SET="set!"
 
 WHITE_SPACE=[\ \n\r\t\f]+
-COMMENT=";"[^\r\n]*|"#|"[^\#]+"|#"?
+COMMENT=";"[^\r\n]*
+BLOCK_COMMENT="#|"[^\#]+"|#"?
 
 BOOLEAN="#t"|"#f"
 CHARACTER="#\\" ({CHARACTER_NAME}|"x"{DIGIT}+|.)
@@ -114,6 +115,7 @@ DIGIT=[0-9a-f]
 
 {WHITE_SPACE} { return TokenType.WHITE_SPACE; }
 {COMMENT} { return SchemeTokens.COMMENT; }
+{BLOCK_COMMENT} { return SchemeTokens.COMMENT; }
 
 {BOOLEAN} { return SchemeTokenTypes.BOOLEAN; }
 {CHARACTER} { return SchemeTokenTypes.CHARACTER; }
